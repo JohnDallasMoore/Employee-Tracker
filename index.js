@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const clogIntro = require('./lib/clogIntro');
 
 // Create a MySQL connection
 const db = mysql.createConnection({
@@ -8,7 +9,7 @@ const db = mysql.createConnection({
   password: 'password',
   database: 'employee_db',
 });
-
+console.log(clogIntro); 
 // Connect to the database
 db.connect((err) => {
   if (err) throw err;
@@ -63,32 +64,52 @@ function start(){
             }
         });
     };
-        // Function to view all departments
-        function viewAllDepartments() {
-            db.query('SELECT * FROM department', (err,results) => {
-                if (err) throw err;
-                
-                console.table(results);
-                start();
-            });
-        };
+
+
+// Function to view all departments
+function viewAllDepartments() {
+    db.query('SELECT * FROM department', (err,results) => {
+        if (err) throw err;
+        
+        console.table(results);
+        start();
+    });
+};
+
+
 // Function to view all roles
-// viewAllRoles(){
+function viewAllRoles(){
+    db.query(
+        "SELECT role.id, role.title, role.salary, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id",
+        (err, results) => {
+            if (err) throw err;
 
-// };
-// // Function to view all employees
-// viewAllEmployees(){
+            console.table(results);
+            start();
+        }
+    );
+};
 
-// };
-// // Function to add a department
-// addDepartment(){
 
-// };
-// // Function to add a role
-// addRole(){
+// Function to view all employees
+function viewAllEmployees(){
 
-// };
-// // Function to add an employee
-// addEmployee(){
+};
 
-// };
+
+// Function to add a department
+function addDepartment(){
+
+};
+
+
+// Function to add a role
+function addRole(){
+
+};
+
+
+// Function to add an employee
+function addEmployee(){
+
+};
