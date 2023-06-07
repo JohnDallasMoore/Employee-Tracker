@@ -173,5 +173,43 @@ function addRole(){
 
 // Function to add an employee
 function addEmployee(){
-
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'Enter the employees first name:',
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'Enter the employees last name:',
+        },
+        {
+            type: 'input',
+            name: 'role_id',
+            message: 'Enter the employees role ID:',
+        },
+        {
+            type: 'input',
+            name: 'manager',
+            message: 'Enter the employees manager ID:',
+        },
+    ])
+    .then((answers) => {
+        db.query(
+            'INSERT INTO employees SET ?',
+            {
+                first_name: answers.first_name,
+                last_name: answers.last_name,
+                role_id: answers.role_id,
+                manager_id: answers.manager_id,
+            },
+            (err) => {
+                if (err) throw err;
+                console.log('Employee added successfully.');
+                start();
+            }
+        );
+    });
 };
