@@ -92,9 +92,21 @@ function viewAllRoles(){
 
 
 // Function to view all employees
-function viewAllEmployees(){
-
-};
+function viewAllEmployees() {
+    db.query(
+      `SELECT employees.id, employees.first_name, employees.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager 
+      FROM employees 
+      LEFT JOIN role ON employees.role_id = role.id 
+      LEFT JOIN department ON role.department_id = department.id 
+      LEFT JOIN employees manager ON employees.manager_id = manager.id`,
+      (err, results) => {
+        if (err) throw err;
+  
+        console.table(results);
+        start();
+      }
+    );
+  }
 
 
 // Function to add a department
