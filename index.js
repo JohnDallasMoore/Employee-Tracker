@@ -80,7 +80,10 @@ function viewAllDepartments() {
 // Function to view all roles
 function viewAllRoles(){
     db.query(
-        "SELECT role.id, role.title, role.salary, department.name AS department FROM role LEFT JOIN department ON role.department_id = department.id",
+        `SELECT role.id, role.title, role.salary, department.name AS department
+        FROM role
+        INNER JOIN department ON role.department_id = department.id
+        `,
         (err, results) => {
             if (err) throw err;
 
@@ -192,7 +195,7 @@ function addEmployee(){
         },
         {
             type: 'input',
-            name: 'manager',
+            name: 'manager_id',
             message: 'Enter the employees manager ID:',
         },
     ])
