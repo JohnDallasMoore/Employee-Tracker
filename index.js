@@ -26,6 +26,7 @@ function start(){
                     'Add a department',
                     'Add a role',
                     'Add an employee',
+                    'Update an employee role',
                     'Exit',
                 ],
             },
@@ -49,6 +50,9 @@ function start(){
                     break;
                 case 'Add an employee':
                     addEmployee();
+                    break;
+                case 'Update an employee role':
+                    updateEmployeeRole();
                     break;
                 case 'Exit':
                     db.end();
@@ -208,3 +212,39 @@ function addEmployee(){
         );
     });
 };
+
+// Function to update an employee's role
+function updateEmployeeRole() {
+    db.query("SELECT * FROM employees", (err, employees) => {
+      if (err) throw err;
+  
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            name: "employeeId",
+            message: "Select the employee to update:",
+            choices: employees.map((employee) => ({
+              name: `${employee.first_name} ${employee.last_name}`,
+              value: employee.id,
+            })),
+          },
+          {
+            type: "input",
+            name: "roleId",
+            message: "Enter the employee's new role ID:",
+          },
+        ])
+        .then((answers) => {
+          db.query(
+            "UPDATE employees SET ? WHERE ?",
+            [{ role_id: answers.roleId }, { id: answers.employeeId }],
+            (err) => {
+              if (err) throw err;
+              console.log("Employee role updated successfully.");
+              start();
+            }
+          );
+        });
+    });
+  }
