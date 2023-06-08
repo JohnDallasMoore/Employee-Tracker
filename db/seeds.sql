@@ -27,6 +27,3 @@ VALUES (1, 'Violet', 'Turner', 1, null),
        (10, 'Urvin', 'Wright', 7, null),
        (11, 'Marques', 'Sloan', 8, 10),
        (12, 'Wayne', 'Hammond', 8, 10);
-
-
-
