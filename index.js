@@ -1,23 +1,15 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const clogIntro = require('./lib/clogIntro');
+const db = require('./config/connection')
 
-// Create a MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'password',
-  database: 'employee_db',
-});
-console.log(clogIntro); 
-// Connect to the database
-db.connect((err) => {
-  if (err) throw err;
-  console.log('Connected to the employee database.');
 
-  // Start the application
-  start();
-});
+function init(){
+    console.log(clogIntro);
+    start()
+};
+
+init();
 
 // Function to start the application
 function start(){
